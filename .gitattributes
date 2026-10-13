@@ -1,0 +1,3 @@
+# Keep the Colab bundle files byte-identical to what Step 11 produced
+backend/models/** -text
+backend/samples/** -text
