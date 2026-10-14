@@ -1,0 +1,90 @@
+/* Design tokens. Layout and palette follow the owner's BizLink reference: white app, warm beige hero panel,
+   near-black ink, light hairlines and one plain red for everything alert-related.
+   Light theme only. */
+:root {
+  color-scheme: light;
+
+  --surface-000: #ffffff;   /* cards, sidebar, page */
+  --surface-100: #ffffff;   /* page background */
+  --surface-200: #f3f3f0;   /* selected nav item, table header, sunken areas */
+  --hero: #f1f0ea;          /* the beige top panel */
+  --line: #e6e5e0;          /* hairlines between cards, rows and panels */
+  --line-strong: #8f8e88;   /* control borders (3:1 on white and beige) */
+  --ink: #1a1a1a;
+  --ink-muted: #5c5c57;
+  --ink-faint: #72716b;
+  --accent: #1a1a1a;        /* black buttons, selection */
+  --on-accent: #ffffff;
+  --focus: #1a1a1a;
+
+  /* the dark detail strip under an expanded alert row */
+  --strip-bg: #1c1c1c;
+  --strip-ink: #f5f5f2;
+  --strip-muted: #b9b9b3;
+  --strip-line: #3a3a37;
+
+  /* one red for alerts, attacks and errors */
+  --alert: #d92d20;
+  --on-alert: #ffffff;
+  --alert-soft: #fdecea;
+  --alert-ink: #b42318;
+
+  /* severity levels share the red; their glyph shapes and words tell them apart */
+  --critical: var(--alert);
+  --on-critical: var(--on-alert);
+  --critical-soft: var(--alert-soft);
+  --critical-ink: var(--alert-ink);
+  --high: var(--alert);
+  --on-high: var(--on-alert);
+  --high-soft: var(--alert-soft);
+  --high-ink: var(--alert-ink);
+  --medium: var(--alert);
+  --on-medium: var(--on-alert);
+  --medium-soft: var(--alert-soft);
+  --medium-ink: var(--alert-ink);
+  --low: #8f8e88;
+  --on-low: #ffffff;
+  --low-soft: var(--surface-200);
+  --low-ink: var(--ink-muted);
+  --benign: var(--ink);
+  --on-benign: #ffffff;
+  --benign-soft: var(--surface-200);
+  --benign-ink: var(--ink);
+
+  --viz-normal: #c9c8c1;      /* drawn hatched in the flow strip */
+  --viz-track: #e6e5df;
+  --viz-grid: #e6e5e0;
+  --viz-threshold: var(--ink);
+  --viz-attack: var(--alert);
+  --viz-toward-normal: #8f8e88;
+  --viz-false-alarm: #f2a198;
+  --viz-missed: var(--alert);
+  --viz-caught: var(--ink);
+
+  --shadow-raised: none;
+  --shadow-pop: 0 8px 24px rgba(26, 26, 26, 0.12);
+
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 6px;
+  --radius-btn: 12px;      /* controls: buttons, inputs, switch, table header, row highlight */
+  --radius-md: 12px;       /* tiles inside a block */
+  --radius-lg: 16px;       /* every block: cards, top panel, detail strip, banners */
+
+  --pad-block: 24px;       /* inner padding of every block */
+  --gap-block: 24px;       /* space between blocks */
+  --radius-pill: 999px;
+}
+
+
+@media (max-width: 480px) {
+  :root { --pad-block: 20px; }
+}

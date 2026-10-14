@@ -1,0 +1,106 @@
+/* Component styles (nd-*). Every value is a token from tokens.css; fonts load from index.html. */
+body { margin: 0; background: var(--surface-100); color: var(--ink); font-family: var(--font-sans); font-size: 14px; line-height: 20px; }
+.nd-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.nd-label { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--ink-muted); }
+.nd-caption { font-size: 12px; line-height: 16px; color: var(--ink-faint); }
+
+/* Button: black primary like "Add customer", outlined secondary */
+.nd-btn { font: inherit; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 40px; padding: 0 var(--space-4); border-radius: var(--radius-btn); border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+.nd-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.nd-btn-primary { background: var(--accent); color: var(--on-accent); }
+.nd-btn-primary:hover { opacity: .88; }
+.nd-btn-secondary { background: var(--surface-000); color: var(--ink); border-color: var(--line); }
+.nd-btn-secondary:hover { border-color: var(--line-strong); }
+.nd-btn-ghost { background: transparent; color: var(--ink); }
+.nd-btn-ghost:hover { background: var(--surface-200); }
+.nd-btn-sm { height: 32px; padding: 0 var(--space-3); font-size: 13px; }
+.nd-btn:disabled { opacity: .4; cursor: not-allowed; }
+.nd-btn .nd-spin { width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: var(--radius-pill); animation: nd-spin .8s linear infinite; }
+@keyframes nd-spin { to { transform: rotate(360deg); } }
+
+/* Severity glyph + badge: one red, the shape and the word tell levels apart */
+.nd-glyph { flex: none; display: block; }
+.nd-g-critical, .nd-g-high, .nd-g-medium { fill: var(--alert); }
+.nd-g-low { fill: var(--low); }
+.nd-g-benign { fill: var(--ink); color: var(--ink); }
+.nd-badge { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; line-height: 16px; white-space: nowrap; border: 1px solid transparent; }
+.nd-badge-critical, .nd-badge-high, .nd-badge-medium { background: var(--alert-soft); color: var(--alert-ink); }
+.nd-badge-low { background: var(--surface-200); color: var(--ink-muted); }
+.nd-badge-benign { background: var(--surface-200); color: var(--ink); }
+.nd-badge-solid.nd-badge-critical { background: var(--alert); color: var(--on-alert); }
+.nd-badge-solid .nd-glyph { fill: currentColor; }
+
+/* Banners: no colourful fills; red only for real problems */
+.nd-banner { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-3); align-items: start; padding: var(--space-4) var(--pad-block); border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--surface-000); color: var(--ink); }
+.nd-banner-title { font-weight: 600; font-size: 14px; line-height: 20px; margin: 0; }
+.nd-banner-body { margin: 2px 0 0; color: var(--ink-muted); }
+.nd-banner .nd-glyph { margin-top: 2px; }
+.nd-banner-critical { background: var(--alert-soft); border-color: var(--alert); }
+.nd-banner-critical .nd-banner-title { color: var(--alert-ink); }
+.nd-banner-critical .nd-banner-body { color: var(--ink); }
+.nd-banner-warning .nd-glyph { fill: var(--alert); }
+.nd-banner-info .nd-glyph { fill: var(--ink-muted); }
+
+/* Hero numerals (stat tiles) */
+.nd-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nd-stat-value { font-size: clamp(28px, 2.2vw + 14px, 40px); line-height: 1.15; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.nd-stat-unit { font-size: 18px; color: var(--ink-faint); margin-left: 6px; font-weight: 400; letter-spacing: 0; }
+.nd-stat-label { font-size: 14px; line-height: 20px; color: var(--ink); margin-top: var(--space-1); }
+.nd-stat-alert .nd-stat-value { color: var(--alert-ink); }
+
+/* Threshold slider: thin ink track, red part above the threshold */
+.nd-slider { display: flex; flex-direction: column; gap: var(--space-2); }
+.nd-slider-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2); }
+.nd-slider-value { font-family: var(--font-mono); font-size: 22px; line-height: 28px; font-weight: 500; }
+.nd-slider input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: var(--radius-pill); background: linear-gradient(to right, var(--line-strong) 0 var(--nd-pct), var(--alert) var(--nd-pct) 100%); margin: var(--space-2) 0; cursor: pointer; }
+.nd-slider input[type=range]:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
+.nd-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: var(--radius-pill); background: var(--surface-000); border: 2px solid var(--ink); cursor: grab; }
+.nd-slider input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: var(--radius-pill); background: var(--surface-000); border: 2px solid var(--ink); cursor: grab; }
+.nd-slider-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-faint); }
+
+/* Charts */
+.nd-chart text { font-family: var(--font-mono); font-size: 11px; fill: var(--ink-muted); }
+.nd-legend { display: flex; flex-direction: column; gap: var(--space-2); }
+.nd-legend-item { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: var(--space-2); align-items: center; font-size: 13px; }
+.nd-legend-sw { width: 10px; height: 10px; border-radius: 3px; display: block; }
+.nd-legend-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); white-space: pre; }
+.nd-donut { display: flex; gap: var(--space-5); align-items: center; flex-wrap: wrap; }
+.nd-chart .nd-donut-center-v { font-family: var(--font-sans); font-size: 22px; font-weight: 500; fill: var(--ink); }
+.nd-chart .nd-donut-center-l { font-family: var(--font-sans); font-size: 11px; fill: var(--ink-faint); letter-spacing: .06em; }
+
+/* Tick gauge */
+.nd-gauge { width: 100%; max-width: 240px; }
+.nd-gauge svg { display: block; width: 100%; height: auto; }
+.nd-tick-on, .nd-tick-off { stroke-width: 2.2; stroke-linecap: round; }
+.nd-tick-on { stroke: var(--ink); }
+.nd-tick-off { stroke: var(--viz-track); }
+.nd-chart .nd-gauge-v { font-family: var(--font-sans); font-size: 26px; font-weight: 500; fill: var(--ink); letter-spacing: -0.02em; }
+.nd-chart .nd-gauge-l { font-family: var(--font-sans); font-size: 12px; fill: var(--ink-muted); }
+
+/* Probability bar */
+.nd-prob { display: grid; grid-template-columns: 52px minmax(48px, 1fr); gap: var(--space-2); align-items: center; min-width: 120px; }
+.nd-prob-track { position: relative; height: 4px; border-radius: var(--radius-pill); background: var(--viz-track); overflow: hidden; }
+.nd-prob-fill { position: absolute; inset: 0 auto 0 0; border-radius: var(--radius-pill); }
+.nd-prob-num { font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+/* Confusion matrix: correct cells grey, errors red-tinted */
+.nd-cm { display: grid; grid-template-columns: auto 1fr 1fr; gap: 4px; font-size: 12px; }
+.nd-cm-h { color: var(--ink-muted); padding: var(--space-1) var(--space-2); font-weight: 500; font-size: 12px; display: flex; align-items: center; }
+.nd-cm-cell { padding: var(--space-3); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 2px; min-height: 72px; justify-content: center; min-width: 0; }
+.nd-cm-cell b { font-weight: 500; font-size: 24px; line-height: 30px; font-variant-numeric: tabular-nums; }
+.nd-cm-tn, .nd-cm-tp { background: var(--surface-200); }
+.nd-cm-fp, .nd-cm-fn { background: var(--alert-soft); }
+.nd-cm-fp b, .nd-cm-fn b { color: var(--alert-ink); }
+
+/* Reason bars (diverging) — inherit the text colour so they also work on the dark detail strip */
+.nd-reasons { display: flex; flex-direction: column; gap: var(--space-2); }
+.nd-reason { display: grid; grid-template-columns: minmax(0, 1fr) 64px; row-gap: 4px; column-gap: var(--space-3); align-items: center; font-size: 13px; }
+.nd-reason-name { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nd-reason-name small { opacity: .7; margin-left: var(--space-1); font-size: 12px; }
+.nd-reason-axis { position: relative; height: 10px; }
+.nd-reason-axis::before { content: ""; position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: currentColor; opacity: .3; }
+.nd-reason-bar { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+.nd-reason-pos { background: var(--alert); left: 50%; }
+.nd-reason-neg { background: var(--viz-toward-normal); right: 50%; }
+.nd-reason-val { font-family: var(--font-mono); font-size: 12px; text-align: right; }
+.nd-reason-legend { display: flex; justify-content: space-between; font-size: 12px; opacity: .7; padding-right: 76px; }

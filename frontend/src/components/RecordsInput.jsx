@@ -19,13 +19,16 @@ export default function RecordsInput({ samples, value, onChange }) {
       </div>
 
       {value.kind === "sample" ? (
-        <div className="samples">
+        <div className="record-options">
           {samples.map((s) => (
-            <label key={s.id} className={s.id === value.sampleId ? "sample is-selected" : "sample"}>
-              <input type="radio" name="sample" value={s.id} checked={s.id === value.sampleId}
+            <label key={s.id} className="record-option" data-selected={s.id === value.sampleId}>
+              <input type="radio" name="sample" value={s.id} checked={s.id === value.sampleId} className="visually-hidden"
                      onChange={() => onChange({ ...value, sampleId: s.id })} />
-              <span className="sample-name">{networkShort(s.network) || s.file}</span>
-              <span className="sample-meta">{fmt(s.flows)} test flows</span>
+              <span className="record-radio" aria-hidden="true" />
+              <span className="record-main">
+                <span className="record-name">{networkShort(s.network) || s.file}</span>
+                <span className="nd-caption">{fmt(s.flows)} test flows · {s.size_mb} MB</span>
+              </span>
             </label>
           ))}
         </div>
@@ -51,7 +54,7 @@ export default function RecordsInput({ samples, value, onChange }) {
               </>
             )}
           </label>
-          <p className="hint">
+          <p className="nd-caption">
             NetFlow v3 records with a header row. The 41 model inputs are required; IP addresses, ports and start times are
             shown in the alert list when present.
           </p>

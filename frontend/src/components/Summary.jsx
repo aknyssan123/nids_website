@@ -1,52 +1,39 @@
 import { fmt, pct } from "../format.js";
+import StatTile from "./ui/StatTile.jsx";
 
-export default function Summary({ live, summary, threshold, runThreshold, sampled, mismatch }) {
-  const stale = threshold !== runThreshold;
+// Hero panel results: heading, the flow strip and the headline numbers. The numbers follow the slider, using the
+// per-flow scores returned by the last run.
+export default function Summary({ live, summary, threshold, strip }) {
   return (
-    <section className="summary">
-      <h2>
+    <section className="hero-results" aria-labelledby="summary-title">
+      <h2 id="summary-title" className="hero-title">
         {fmt(live.alerts)} {live.alerts === 1 ? "alert" : "alerts"} in {fmt(live.flows)} flows
-        <span className="summary-sub"> with {summary.model} at threshold {threshold.toFixed(2)}</span>
+        <span className="hero-sub"> with {summary.model} at threshold {threshold.toFixed(2)}</span>
       </h2>
-      <dl className="stats">
-        <div className="stat stat-alert">
-          <dt>Flagged</dt>
-          <dd>{pct(live.alerts, live.flows)}</dd>
-          <dd className="stat-detail">of all flows</dd>
+      <div className="hero-grid">
+        <div className="hero-strip">{strip}</div>
+        <div className="hero-stats">
+          <StatTile label="Alerts" value={fmt(live.alerts)} hint={`${pct(live.alerts, live.flows)} of all flows`}
+                    tone={live.alerts > 0 ? "alert" : "neutral"} />
+          {live.hasLabels && (
+            <>
+              <StatTile label="Attacks caught" value={fmt(live.caught)} unit={`/ ${fmt(live.attacks)}`}
+                        hint={`${pct(live.caught, live.attacks, 1)} of attack flows`} />
+              <StatTile label="Missed attacks" value={fmt(live.missed)}
+                        hint={`${pct(live.missed, live.attacks, 1)} of attack flows`}
+                        tone={live.missed > 0 ? "alert" : "neutral"} />
+              <StatTile label="False alarms" value={fmt(live.falseAlarms)}
+                        hint={`${pct(live.falseAlarms, live.benign)} of benign flows`}
+                        tone={live.falseAlarms > 0 ? "alert" : "neutral"} />
+            </>
+          )}
+          <StatTile label="Flows per second" value={fmt(Math.round(summary.flows_per_second))}
+                    hint={`scoring only; ${summary.seconds_total.toFixed(2)} s with reasons`} />
         </div>
-        {live.hasLabels && (
-          <>
-            <div className="stat">
-              <dt>Attacks caught</dt>
-              <dd>{fmt(live.caught)} of {fmt(live.attacks)}</dd>
-              <dd className="stat-detail">{pct(live.caught, live.attacks, 1)} of attack flows</dd>
-            </div>
-            <div className="stat">
-              <dt>False alarms</dt>
-              <dd>{fmt(live.falseAlarms)}</dd>
-              <dd className="stat-detail">{pct(live.falseAlarms, live.benign)} of benign flows</dd>
-            </div>
-          </>
-        )}
-        <div className="stat">
-          <dt>Flows per second</dt>
-          <dd>{fmt(Math.round(summary.flows_per_second))}</dd>
-          <dd className="stat-detail">scoring only; {summary.seconds_total.toFixed(2)} s with reasons</dd>
-        </div>
-      </dl>
+      </div>
       {live.hasLabels && (
-        <p className="hint">Attack and false-alarm counts use the file’s Label column, which the detector never sees.</p>
-      )}
-      {sampled && <p className="hint">The file is large, so the counts above use an even sample of its flows.</p>}
-      {mismatch && (
-        <p className="note note-warn">
-          These records come from a different network than the detector’s training data ({summary.trained_on}).
-        </p>
-      )}
-      {stale && (
-        <p className="note">
-          You moved the threshold from {runThreshold.toFixed(2)}. The counts and the strip follow it; run the detector
-          again to refresh the reasons and the alert list.
+        <p className="nd-caption">
+          Attack and false-alarm counts use the file’s Label column, which the detector never sees.
         </p>
       )}
     </section>

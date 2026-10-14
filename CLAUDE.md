@@ -152,12 +152,24 @@ APA style cited with numbers [1]; placeholders for authors and affiliations. Del
   Reasons are computed for the top 2,000 alerts (SHAP) or top 300 (feature replacement).
 - `backend/models/catalog.json`: seven detectors (`unsw-xgboost` default, `cic-xgboost`, `unsw-lr`, `unsw-dt`,
   `unsw-rf`, `unsw-lgbm2`, `unsw-mlp`) with metrics, speed and explanation method.
-- Frontend design: ink #1d2733, paper #f3f6f8, signal blue #2a78d6 and alert orange #eb6834 (same as the paper's
-  figures), calm #9fb7cf, track #e3e9ef; IBM Plex Sans for text, IBM Plex Mono only for machine values (feature names,
-  addresses, probabilities). The signature element is the flow strip (`FlowStrip.jsx`): each canvas column is a run of
-  consecutive flows, its height the highest attack probability in the run, orange when it reaches the threshold, a dashed
-  threshold line that follows the slider, and a lower band marking the file's labelled attacks. Avoid all-caps labels,
-  identical card grids and decorative motion.
+- Frontend design (since 2026-10-14): modelled on a BizLink CRM screenshot the owner supplied, keeping the components
+  of the earlier "NIDS Console" design system (<https://claude.ai/artifact/LmcXfDA6ufCrMDUFRiWzd7>; the artifact itself
+  still shows the older colours). Tokens in `frontend/src/styles/tokens.css` (light theme only, by the owner's choice),
+  component classes (`nd-*`) in `frontend/src/styles/components.css`, components in `frontend/src/components/ui/`,
+  layout in `frontend/src/styles.css`. Every block (cards, hero, detail strip, banners, record tiles, upload area)
+  shares `--radius-lg` 16px, `--pad-block` 24px and `--gap-block` 24px; controls use `--radius-btn` 12px. White app, beige hero panel (`--hero`), near-black ink, light hairlines,
+  black primary button; Inter for text and numerals, IBM Plex Mono for machine values. One plain red (`--alert`) for
+  everything alert-related; severity levels (critical ≥ 0.95, high ≥ 0.85, medium ≥ threshold) share it and differ
+  by word and glyph shape. Layout: left sidebar (322px, 285px below 1280px: detectors as nav items with the MCC pill,
+  threshold, service status); hero card with rounded corners (selection + Run button, banners, flow strip, big
+  numerals); "Flow records" card (sample tiles or CSV upload); card row (share of flows, tick
+  gauges, confusion matrix, what triggered the alerts; values computed on the file, study values from `catalog.json`
+  beside them); full-width alert list whose rows expand into a dark strip with that flow's reasons; detector table.
+  The flow strip (`FlowStrip.jsx`) is a canvas: columns = runs of flows, height = highest probability, red at the
+  threshold, hatched grey below, dashed threshold line, lower band = labelled attacks; colours read from the tokens.
+  Responsive: sidebar sticky ≥1024px and stacked above below that; card row 1/2/4 columns by container width; tables
+  turn into labelled cards when their container is under 860px. Note: the site's red is not the orange of the paper's
+  figures.
 - The threshold slider recomputes counts and the strip in the browser from the returned per-flow scores; reasons and
   the alert list refresh only on a new run (the page says so).
 - Hosting later: frontend on Vercel; backend as a Vercel Python function or on a separate host. Vercel limits request

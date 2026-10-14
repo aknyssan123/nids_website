@@ -157,3 +157,50 @@ must point to the deployed backend.
 Everything the site displays about model quality (MCC, false alarms, missed attacks, timing) is read from
 `backend/models/catalog.json`, which Colab Step 11 wrote from the experiment results (Steps 8 and 10). Results computed
 on the page come from the backend running the real models on the selected file, on your own computer.
+
+## 8. Exact commands (Windows PowerShell)
+
+The project folder on this computer is `C:\Users\User\Desktop\nids_website`; the backend uses Python 3.13. These
+commands call the virtual environment's `python.exe` directly, so `Activate.ps1` (and the execution-policy question)
+is never needed.
+
+### First time only
+
+```powershell
+cd C:\Users\User\Desktop\nids_website\backend
+py -3.13 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+
+cd C:\Users\User\Desktop\nids_website\frontend
+npm ci
+```
+
+### Every time
+
+Terminal 1 (backend), leave it open:
+
+```powershell
+cd C:\Users\User\Desktop\nids_website\backend
+.\.venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000
+```
+
+Terminal 2 (frontend), leave it open:
+
+```powershell
+cd C:\Users\User\Desktop\nids_website\frontend
+npm run dev
+```
+
+Then open <http://localhost:5173> in the browser. Stop either part with `Ctrl+C` in its terminal.
+
+### Optional: production build of the frontend
+
+```powershell
+cd C:\Users\User\Desktop\nids_website\frontend
+npm run build
+npm run preview
+```
+
+`npm run build` writes the finished site to `frontend\dist`; `npm run preview` serves that build at
+<http://localhost:4173> (the backend from Terminal 1 must still be running).
