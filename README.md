@@ -84,6 +84,25 @@ npm install
 
 ## 2. Run the site (every time)
 
+### 2.1 With one command (make)
+
+From the project folder, in any terminal:
+
+| Command | What it does |
+| --- | --- |
+| `make install` | Once: creates `backend\.venv` with Python 3.13 if it is missing, installs the Python packages, runs `npm ci` |
+| `make up` | Starts the backend and the frontend in the background, waits until both answer, opens <http://localhost:5173> |
+| `make down` | Stops both |
+| `make restart` | `make down`, then `make up` |
+| `make status` | Shows whether each part is running |
+
+`make up` keeps the two process IDs in `.run\pids.txt`, so `make down` stops exactly those. `make down` also stops a
+backend or frontend that you started by hand (only Python or Node on ports 8000 and 5173). The output of both parts goes
+to `.run\backend.log` and `.run\frontend.log`; look there if something fails. Set `NO_BROWSER=1` to start without
+opening the browser. Make on Windows: `choco install make`.
+
+### 2.2 By hand, in two terminals
+
 You need two terminals, both kept open.
 
 **Terminal 1, backend:**
